@@ -43,6 +43,7 @@ export const fetchVideoDetails = async (videoId: string) => {
       id: videoId,
     },
   });
+  console.log('Video Details:', response.data.items[0]);
   return response.data.items[0];
 };
 
@@ -54,4 +55,16 @@ export const fetchChannelDetails = async (channelId: string) => {
     },
   });
   return response.data.items[0];
+};
+
+export const fetchRelatedVideos = async (videoId: string) => {
+  const response = await youtube.get('/search', {
+    params: {
+      part: 'snippet',
+      relatedToVideoId: videoId,
+      type: 'video',
+      maxResults: 10,
+    },
+  });
+  return response.data;
 };
